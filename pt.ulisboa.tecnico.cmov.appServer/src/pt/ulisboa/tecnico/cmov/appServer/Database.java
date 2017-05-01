@@ -17,5 +17,10 @@ public class Database {
 	public ActiveUsers getActiveUsers(){
 		return activeUsers;
 	}
+	
+	public User getUserFromSession(int sessionID){
+		String username = activeUsers.getUsername(sessionID);
+		return userAccounts.getUser(username);
+	}
 
 }

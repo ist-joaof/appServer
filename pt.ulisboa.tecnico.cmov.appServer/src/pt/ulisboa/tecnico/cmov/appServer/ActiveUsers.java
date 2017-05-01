@@ -21,5 +21,9 @@ public class ActiveUsers {
 	public void deactivateUser(int sessionID){
 		activeUsers.remove(sessionID);
 	}
+	
+	public String getUsername(int sessionID){
+		return activeUsers.get(sessionID);
+	}
 
 }

@@ -10,6 +10,7 @@ class ThreadHandler extends Thread {
 	UserAccounts accounts;
 	int n;
 	int aux;
+	String out;
 	
 	ThreadHandler(Socket s, int v, Database database) {
 	    newsock = s;
@@ -54,6 +55,26 @@ class ThreadHandler extends Thread {
 		db.getActiveUsers().deactivateUser(sessionID);
 	}
 	
+	public String getKeys(String line){
+		String[] list;
+		String out;
+		int sessionID = Integer.parseInt(line.split("_")[1]);
+		User user = db.getUserFromSession(sessionID);
+		list = user.getAllKeys();
+		out = list[0];
+		for(int i=1;i<list.length;i++)
+			out = out + "_" + list[i]; 
+		return out;
+	}
+	
+	public void updateDB(String line){
+		String[] aux = line.split("_");
+		int sessionID = Integer.parseInt(aux[1]);
+		aux = aux[2].split("=");
+		User user = db.getUserFromSession(sessionID);
+		user.newKeyPair(aux[0], aux[1]);
+		System.out.println("New keypair: " + aux[0]+"="+aux[1]);
+	}
 	
 	public void run() {
 	    try {
@@ -98,6 +119,16 @@ class ThreadHandler extends Thread {
 	                if(line.trim().split("_")[0].equals("O")){
 	                	logout(line);
 	                	System.out.println("Logout session: " + line.trim().split("_")[1]);
+	                	more_data=false;
+	                }
+	                if(line.trim().split("_")[0].equals("K")){
+	                	out = getKeys(line);
+                		outp.println(out);
+                		System.out.println(out);
+	                	more_data=false;
+	                }
+	                if(line.trim().split("_")[0].equals("K+")){
+	                	updateDB(line);
 	                	more_data=false;
 	                }
 	            }
