@@ -7,6 +7,7 @@ public class Server {
 	public static void main(String[] args) {
 
         int nreq = 1;
+        Database db = new Database();
         try
         {
             ServerSocket sock = new ServerSocket (8080);
@@ -14,7 +15,7 @@ public class Server {
             {
                 Socket newsock = sock.accept();
                 System.out.println("Creating thread ...");
-                Thread t = new ThreadHandler(newsock,nreq);
+                Thread t = new ThreadHandler(newsock,nreq,db);
                 t.start();
             }
         }
