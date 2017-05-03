@@ -61,10 +61,14 @@ class ThreadHandler extends Thread {
 		int sessionID = Integer.parseInt(line.split("_")[1]);
 		User user = db.getUserFromSession(sessionID);
 		list = user.getAllKeys();
-		out = list[0];
-		for(int i=1;i<list.length;i++)
-			out = out + "_" + list[i]; 
-		return out;
+		if(list != null){
+			out = list[0];
+			for(int i=1;i<list.length;i++)
+				out = out + "_" + list[i]; 
+			return out;
+		}else{
+			return "empty";
+		}
 	}
 	
 	public void updateDB(String line){
@@ -74,6 +78,12 @@ class ThreadHandler extends Thread {
 		User user = db.getUserFromSession(sessionID);
 		user.newKeyPair(aux[0], aux[1]);
 		System.out.println("New keypair: " + aux[0]+"="+aux[1]);
+	}
+	
+	public void deleteKeys(String line){
+		User user = db.getUserAccounts().getUser(line.split("_")[1]);
+		user.deleteAllKeys();
+		System.out.println("All keys deleted");
 	}
 	
 	public void run() {
@@ -129,6 +139,10 @@ class ThreadHandler extends Thread {
 	                }
 	                if(line.trim().split("_")[0].equals("K+")){
 	                	updateDB(line);
+	                	more_data=false;
+	                }
+	                if(line.trim().split("_")[0].equals("D")){
+	                	deleteKeys(line);
 	                	more_data=false;
 	                }
 	            }
