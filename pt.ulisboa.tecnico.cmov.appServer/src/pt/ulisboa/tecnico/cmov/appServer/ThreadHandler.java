@@ -74,7 +74,7 @@ class ThreadHandler extends Thread {
 	public void updateDB(String line){
 		String[] aux = line.split("_");
 		Boolean add = true;
-		if(aux[0].equals("-"))
+		if(aux[0].equals("K-"))
 			add = false;		
 		int sessionID = Integer.parseInt(aux[1]);
 		aux = aux[2].split("=");
@@ -84,6 +84,7 @@ class ThreadHandler extends Thread {
 			System.out.println("New keypair: " + aux[0]+"="+aux[1]);
 		}else{
 			user.removeKeyPair(aux[0]);
+			System.out.println("Keypair " + aux[0]+"="+aux[1]+" removed");
 		}
 	}
 	
