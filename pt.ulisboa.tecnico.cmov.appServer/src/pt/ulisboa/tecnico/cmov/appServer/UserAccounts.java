@@ -12,10 +12,10 @@ public class UserAccounts {
 	
 	public void createAdmin(){
 		User admin = newUser("admin","admin");
-		admin.newKeyPair("curso", "METI");
-		admin.newKeyPair("Campus", "TagusPark");
-		admin.newKeyPair("Transporte", "carro");
-		admin.newKeyPair("type", "admin");
+		admin.addKeyPair("curso", "METI");
+		admin.addKeyPair("Campus", "TagusPark");
+		admin.addKeyPair("Transporte", "carro");
+		admin.addKeyPair("type", "admin");
 	}
 	
 	public User newUser(String username, String password){
