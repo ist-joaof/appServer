@@ -29,8 +29,12 @@ public class User {
 		return username;
 	}
 	
-	public void newKeyPair(String key, String value){
+	public void addKeyPair(String key, String value){
 		keyPairs.put(key, value);
+	}
+	
+	public void removeKeyPair(String key){
+		keyPairs.remove(key);
 	}
 	
 	public boolean hasKey(String key){

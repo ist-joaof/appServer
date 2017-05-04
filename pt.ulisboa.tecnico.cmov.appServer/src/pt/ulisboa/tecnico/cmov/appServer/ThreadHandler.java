@@ -73,11 +73,18 @@ class ThreadHandler extends Thread {
 	
 	public void updateDB(String line){
 		String[] aux = line.split("_");
+		Boolean add = true;
+		if(aux[0].equals("-"))
+			add = false;		
 		int sessionID = Integer.parseInt(aux[1]);
 		aux = aux[2].split("=");
 		User user = db.getUserFromSession(sessionID);
-		user.newKeyPair(aux[0], aux[1]);
-		System.out.println("New keypair: " + aux[0]+"="+aux[1]);
+		if(add){
+			user.addKeyPair(aux[0], aux[1]);
+			System.out.println("New keypair: " + aux[0]+"="+aux[1]);
+		}else{
+			user.removeKeyPair(aux[0]);
+		}
 	}
 	
 	public void deleteKeys(String line){
@@ -95,6 +102,7 @@ class ThreadHandler extends Thread {
 	
 	        boolean more_data = true;
 	        String line;
+	        String operation;
 	
 	        while (more_data) {
 	            line = inp.readLine();
@@ -103,8 +111,8 @@ class ThreadHandler extends Thread {
 	                System.out.println("line = null");
 	                more_data = false;
 	            } else {
-	                //outp.println("From server: " + line + ". \n");
-	                if(line.trim().split("_")[0].equals("L")){
+	                operation = line.trim().split("_")[0];
+	                if(operation.equals("L")){
 	                	if(checkLogin(line)){
 	                		aux = generateSession(line.split("_")[1]);
 	                		outp.println(String.valueOf(aux));
@@ -115,7 +123,7 @@ class ThreadHandler extends Thread {
 	                	}
 	                	more_data=false;
 	                }
-	                if(line.trim().split("_")[0].equals("S")){
+	                if(operation.equals("S")){
 	                	if(checkSignIn(line)){
 	                		aux = generateSession(line.split("_")[1]);
 	                		outp.println(String.valueOf(aux));
@@ -126,22 +134,23 @@ class ThreadHandler extends Thread {
 	                	}
 	                	more_data=false;
 	                }
-	                if(line.trim().split("_")[0].equals("O")){
+	                if(operation.equals("O")){
 	                	logout(line);
 	                	System.out.println("Logout session: " + line.trim().split("_")[1]);
 	                	more_data=false;
 	                }
-	                if(line.trim().split("_")[0].equals("K")){
+	                if(operation.equals("K")){
 	                	out = getKeys(line);
                 		outp.println(out);
                 		System.out.println(out);
 	                	more_data=false;
 	                }
-	                if(line.trim().split("_")[0].equals("K+")){
+	                if(operation.equals("K+") || operation.equals("K-")){
 	                	updateDB(line);
 	                	more_data=false;
 	                }
-	                if(line.trim().split("_")[0].equals("D")){
+	                
+	                if(operation.equals("D")){
 	                	deleteKeys(line);
 	                	more_data=false;
 	                }
