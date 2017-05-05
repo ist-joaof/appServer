@@ -85,6 +85,7 @@ class ThreadHandler extends Thread {
 			System.out.println("New keypair: " + aux[0]+"="+aux[1]);
 		}else{
 			user.removeKeyPair(aux[0]);
+			db.removeKeyPair(aux[0],user);
 			System.out.println("Keypair " + aux[0]+"="+aux[1]+" removed");
 		}
 	}
@@ -92,6 +93,7 @@ class ThreadHandler extends Thread {
 	public void deleteKeys(String line){
 		User user = db.getUserAccounts().getUser(line.split("_")[1]);
 		user.deleteAllKeys();
+		db.removeAllKeysFromUser(user.getAllKeys(), user);
 		System.out.println("All keys deleted");
 	}
 	
