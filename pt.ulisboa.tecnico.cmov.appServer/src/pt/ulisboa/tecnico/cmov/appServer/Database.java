@@ -3,8 +3,6 @@ package pt.ulisboa.tecnico.cmov.appServer;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 public class Database {
 	
 	private UserAccounts userAccounts;
