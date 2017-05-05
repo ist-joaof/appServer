@@ -81,6 +81,7 @@ class ThreadHandler extends Thread {
 		User user = db.getUserFromSession(sessionID);
 		if(add){
 			user.addKeyPair(aux[0], aux[1]);
+			db.newKey(aux[0], user);
 			System.out.println("New keypair: " + aux[0]+"="+aux[1]);
 		}else{
 			user.removeKeyPair(aux[0]);
