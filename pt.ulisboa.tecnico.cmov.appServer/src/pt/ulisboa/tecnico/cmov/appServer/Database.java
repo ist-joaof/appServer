@@ -10,11 +10,13 @@ public class Database {
 	private UserAccounts userAccounts;
     private ActiveUsers activeUsers;
 	private Map<String,Map<String,User>> keyPairs;
+	private Map<String, Location> locations;
     
 	public Database(){
 		userAccounts = new UserAccounts();
         activeUsers = new ActiveUsers();
         keyPairs = new HashMap<String,Map<String,User>>();
+        locations = new HashMap<String, Location>();
 	}
 	
 	public void newKey(String key, User user){
@@ -64,6 +66,30 @@ public class Database {
 	public User getUserFromSession(int sessionID){
 		String username = activeUsers.getUsername(sessionID);
 		return userAccounts.getUser(username);
+	}
+	
+	public void addLocation(String name, Location location){
+		locations.put(name, location);
+	}
+	
+	public void removeLocation(String name){
+		locations.remove(name);
+		
+	}
+	
+	public String[] listLocation(){
+		String[] aux = new String[locations.size()];
+		int i = 0;
+		for(Map.Entry<String, Location> entry:locations.entrySet()){
+			aux[i] = entry.getKey();
+			i++;
+		}
+		return aux;
+		
+	}
+	
+	public Location getLocation(String name){
+		return locations.get(name);
 	}
 
 }

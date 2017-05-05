@@ -97,6 +97,66 @@ class ThreadHandler extends Thread {
 		System.out.println("All keys deleted");
 	}
 	
+	public void updateLocation(String line){
+		
+		String operation = line.split("_")[0];
+		line = line.substring(4, line.length());
+		Location location;
+		if (operation.equals("Loc+")){
+			location = new Location (line);
+			db.addLocation(location.getName(), location);
+			System.out.println("New Location Added");
+		}else{
+			db.removeLocation(line.split("_")[0]);
+			System.out.println("Location Removed");
+			
+		}
+	}
+	
+	public String listLocation(){
+		String aux = new String();
+		String[] list = db.listLocation();
+		aux = list[0];
+		for(int i = 1; i < list.length; i++){
+			aux += "_" + list[i];
+		}
+		return aux;
+	}
+	
+	public void updateMessage(String line){
+		String operation = line.split("_")[0];
+		line = line.substring(3, line.length());
+		Message message;
+		if (operation.equals("M+")){
+			String[] aux = line.split("_");
+			Location location = db.getLocation(aux[5]);
+			User user = db.getUserFromSession(Integer.parseInt(aux[6]));
+			line = aux[0] + "_" + aux[1] + "_" + aux[2] + "_" + aux[3] + "_" + aux[4];
+			message = new Message(line, location, user);
+			location.addMessage(message);
+			user.addMessage(message);
+		} else{
+			String[] aux = line.split("_");
+			User user = db.getUserFromSession(Integer.parseInt(aux[1]));
+			message = user.getMessage(aux[0]);
+			message.getLocation().removeMessage(aux[0]);
+			user.removeMessage(aux[0]);
+			
+		}
+	}
+	
+	public String listMessages(String line){
+		int session = Integer.parseInt(line.split("_")[1]);
+		User user = db.getUserFromSession(session);
+		String[] aux = user.listMessages();
+		String out = aux[0];
+		for(int i = 1; i < aux.length; i++){
+			out += "_" + aux[i];
+		}
+		return out;
+	}
+	
+	
 	public void run() {
 	    try {
 	
@@ -156,6 +216,28 @@ class ThreadHandler extends Thread {
 	                
 	                if(operation.equals("D")){
 	                	deleteKeys(line);
+	                	more_data=false;
+	                }
+	                
+	                if(operation.equals("Loc+") || operation.equals("Loc-")){
+	                	updateLocation(line);
+	                	more_data=false;
+	                	
+	                }
+	                if(operation.equals("Loc")){
+	                	out = listLocation();
+	                	outp.println(out);
+	                	System.out.println(out);
+	                	more_data=false;
+	                }
+	                if(operation.equals("M+") || operation.equals("M-")){
+	                	updateMessage(line);
+	                	more_data = false;
+	                }
+	                if(operation.equals("M")){
+	                	out = listMessages(line);
+	                	outp.println(out);
+	                	System.out.println(out);
 	                	more_data=false;
 	                }
 	            }

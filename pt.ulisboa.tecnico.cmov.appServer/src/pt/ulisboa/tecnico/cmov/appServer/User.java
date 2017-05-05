@@ -10,11 +10,13 @@ public class User {
 	private String username;
 	private String password;
 	private Map<String,String> keyPairs;
+	private Map<String, Message> messages;
 	
 	public User(String username , String password){
 		this.username = username;
 		this.password = password;
 		keyPairs = new HashMap<String,String>();
+		messages = new HashMap<String, Message>();
 	}
 	
 	public void changePassword(String newPassword){
@@ -61,5 +63,27 @@ public class User {
 	
 	public void deleteAllKeys(){
 		keyPairs.clear();
+	}
+	
+	public void addMessage(Message message){
+		messages.put(message.getName(), message);
+	}
+	
+	public void removeMessage(String name){
+		messages.remove(name);
+		}
+	
+	public Message getMessage(String name){
+		return messages.get(name);
+	}
+	
+	public String[] listMessages(){
+		String[] out = new String[messages.size()];
+		int i=0;
+		for (Map.Entry<String, Message> entry: messages.entrySet()){
+			out[i] = entry.getKey();
+			i++;
+		}
+		return out;
 	}
 }
