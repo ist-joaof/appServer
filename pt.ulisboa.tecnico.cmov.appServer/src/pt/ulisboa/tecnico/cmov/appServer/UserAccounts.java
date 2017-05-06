@@ -7,16 +7,8 @@ public class UserAccounts {
 	
 	public UserAccounts(){
 		userAccounts = new HashMap<String,User>();
-		createAdmin();
 	}
 	
-	public void createAdmin(){
-		User admin = newUser("admin","admin");
-		admin.addKeyPair("curso", "METI");
-		admin.addKeyPair("Campus", "TagusPark");
-		admin.addKeyPair("Transporte", "carro");
-		admin.addKeyPair("type", "admin");
-	}
 	
 	public User newUser(String username, String password){
 		User newUser = new User(username,password);

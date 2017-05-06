@@ -15,6 +15,21 @@ public class Database {
         activeUsers = new ActiveUsers();
         keyPairs = new HashMap<String,Map<String,User>>();
         locations = new HashMap<String, Location>();
+        createAdmin();
+	}
+	
+	public void createAdmin(){
+		User admin = userAccounts.newUser("admin", "admin");
+		admin.addKeyPair("curso", "METI");
+		newKey("curso",admin);
+		admin.addKeyPair("campus", "Taguspark");
+		newKey("campus",admin);
+		admin.addKeyPair("transporte", "carro");
+		newKey("transporte",admin);
+		admin.addKeyPair("OS", "andoird");
+		newKey("OS",admin);
+		admin.addKeyPair("cadeira", "CMU");
+		newKey("cadeira",admin);
 	}
 	
 	public void newKey(String key, User user){
