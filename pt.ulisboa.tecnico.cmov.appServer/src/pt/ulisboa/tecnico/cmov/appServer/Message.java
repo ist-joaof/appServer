@@ -39,6 +39,9 @@ public class Message {
 		centralized = true;
 		if (aux[4].equals("descentralized"))
 			centralized = false;
+		
+		user.addMessage(this);
+		location.addMessage(this);
 	}
 	
 	public String getName(){
