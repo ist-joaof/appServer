@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.cmov.appServer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.lang.Math.*;
 
 
 
@@ -21,8 +22,8 @@ public class Location {
 		if (aux.length > 2) {
 			gps = true;
 			name = aux[0];
-			lat = new Coordenates(true, Integer.parseInt(aux[1]), Integer.parseInt(aux[2]), Float.parseFloat(aux[3]), aux[4]);
-			longe = new Coordenates(false, Integer.parseInt(aux[5]), Integer.parseInt(aux[6]), Float.parseFloat(aux[7]), aux[8]);
+			lat = new Coordenates(true, Integer.parseInt(aux[1]),  aux[2]);
+			longe = new Coordenates(false, Integer.parseInt(aux[3]), aux[4]);
 			radius = Integer.parseInt(aux[9]);
 
 		} else {
@@ -30,12 +31,14 @@ public class Location {
 			name = aux[0];
 			wifiID = aux[1];
 		} 
-	}
-	
-	
+	}	
 	
 	public String getName(){
 		return name;
+	}
+	
+	public boolean isGPS(){
+		return gps;
 	}
 	
 	public Coordenates getLat(){
@@ -63,9 +66,46 @@ public class Location {
 		messages.remove(name);
 	}
 	
-	public Message getMessages(String name){
-		
+	public Message getMessages(String name){	
 	return messages.get(name);
+	}
+	
+	public boolean isInRange(double lat, double longe){
+		double d = distance(getLat().getDegrees(),getLong().getDegrees(),lat,longe);
+		if(d > radius){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public double distance(double latc, double longc, double latd, double longd){
+		double radiusE = 6371*Math.pow(10.0, 3.0);
+		double deltaLat,deltaLong, a, c;
+		latc = Math.toRadians(latc);
+		latd = Math.toRadians(latd);
+		deltaLat = Math.toRadians(latd-latc);
+		deltaLong = Math.toRadians(longd-longc);
+		a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(latc)*Math.cos(latd)*Math.pow(Math.sin(deltaLong/2),2);
+		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		return radiusE*c;
+	}
+	
+	public Message[] checkKeys(User user){
+		Message[] out = new Message[0];
+		int ptr = -1;
+		for(Map.Entry<String, Message> entry : messages.entrySet()){
+			Message message = entry.getValue();
+			if(message.checkKeys(user)){
+				ptr ++;
+				out[ptr] = message;
+			}
+		}
+		if(ptr >= 0){
+			return out;
+		}else{
+		return null;
+		}
 	}
 
 }

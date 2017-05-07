@@ -104,5 +104,30 @@ public class Database {
 	public Location getLocation(String name){
 		return locations.get(name);
 	}
+	
+	public Location checkLocation(double latitude, double longitude){
+		for(Map.Entry<String, Location> entry : locations.entrySet()){
+			Location location = entry.getValue();
+			if(location.isGPS()){
+				if(location.isInRange(latitude,longitude)){
+					return location;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Location checkLocation(String[] wifis){
+		for(int i=0;i<wifis.length;i++){
+			for(Map.Entry<String, Location> entry : locations.entrySet()){
+				Location location = entry.getValue();
+				if(!location.isGPS()){
+					if(location.getWifiID().equals(wifis[i]))
+						return location;						
+				}
+			}
+		}
+		return null;
+	}
 
 }

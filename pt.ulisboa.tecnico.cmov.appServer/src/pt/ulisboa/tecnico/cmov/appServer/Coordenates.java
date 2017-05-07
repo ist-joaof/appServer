@@ -3,16 +3,13 @@ package pt.ulisboa.tecnico.cmov.appServer;
 public class Coordenates {
 	
 	private boolean latitude;
-	private int degrees, minutes;
-	private float seconds;
+	private double degrees;
 	private String direction;
 	
-	public Coordenates(boolean latLong, int degrees, int minutes, float seconds, String direction){
+	public Coordenates(boolean latLong, float degrees, String direction){
 		
 		this.latitude = latLong;;
 		this.degrees = degrees;
-		this.minutes = minutes;
-		this.seconds = seconds;
 		this.direction = direction;
 	}
 
@@ -20,20 +17,16 @@ public class Coordenates {
 		return latitude;
 	}
 
-	public int getDegrees(){
+	public double getDegrees(){
 		return degrees;
-	}
-	
-	public int getMinutes(){
-		return minutes;
-	}
-	
-	public float getSeconds(){
-		return seconds;
 	}
 	
 	public String getDirection(){
 		return direction;
+	}
+	
+	public String toMessage(){
+		return String.valueOf(degrees) +"$"+ direction;
 	}
 	
 	

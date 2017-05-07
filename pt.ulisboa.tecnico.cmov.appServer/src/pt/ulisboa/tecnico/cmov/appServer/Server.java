@@ -8,6 +8,13 @@ public class Server {
 
         int nreq = 1;
         Database db = new Database();
+        try{
+        	Thread devices = new DeviceReceiver(db);
+        	devices.start();
+        }catch(Exception e){
+        	System.out.println("IO error " + e);
+        }
+        
         try
         {
             ServerSocket sock = new ServerSocket (8080);
