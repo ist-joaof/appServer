@@ -96,7 +96,7 @@ public class Location {
 		int ptr = -1;
 		for(Map.Entry<String, Message> entry : messages.entrySet()){
 			Message message = entry.getValue();
-			if(message.checkKeys(user)){
+			if(message.checkKeys(user) && message.getDeliveryType()){
 				ptr ++;
 				out[ptr] = message;
 			}

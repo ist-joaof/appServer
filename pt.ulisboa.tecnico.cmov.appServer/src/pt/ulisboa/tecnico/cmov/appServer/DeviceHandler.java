@@ -24,7 +24,7 @@ public class DeviceHandler extends Thread{
 		String[] msg1, msg2;
 		User user = db.getUserFromSession(Integer.parseInt(aux[1]));
 		String[] coords = new String[]{aux[2],aux[3]};
-		String[] wifis = new String[0];
+		String[] wifis = new String[aux.length-4];
 		for(int i=4;i<aux.length;i++){
 			wifis[i-4] = aux[i];
 		}
