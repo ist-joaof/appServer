@@ -47,11 +47,13 @@ public class DeviceHandler extends Thread{
 		Location loc = db.checkLocation(Double.parseDouble(coords[0]),Double.parseDouble(coords[1]));
 		if(loc != null){
 			Message[] messages = loc.checkKeys(user);
-			String[] out = new String[messages.length];
-			for(int i=0;i<messages.length;i++){
-				out[i] = messages[i].toMessage();
+			if(messages != null){
+				String[] out = new String[messages.length];
+				for(int i=0;i<messages.length;i++){
+					out[i] = messages[i].toMessage();
+				}
+				return out;
 			}
-			return out;
 		}
 		return null;
 	}
@@ -60,11 +62,13 @@ public class DeviceHandler extends Thread{
 		Location loc = db.checkLocation(wifis);
 		if(loc != null){
 			Message[] messages = loc.checkKeys(user);
-			String[] out = new String[messages.length];
-			for(int i=0;i<messages.length;i++){
-				out[i] = messages[i].toMessage();
+			if(messages != null){
+				String[] out = new String[messages.length];
+				for(int i=0;i<messages.length;i++){
+					out[i] = messages[i].toMessage();
+				}
+				return out;
 			}
-			return out;
 		}
 		return null;
 	}

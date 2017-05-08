@@ -76,8 +76,13 @@ public class Message {
 		String out;
 		out = this.name;
 		out += "_" + this.text;
-		String coords = this.location.getLat().toMessage() + ":" + this.location.getLong().toMessage();
-		out += "_" + coords;
+		if(location.isGPS()){
+			String coords = this.location.getLat().toMessage() + ":" + this.location.getLong().toMessage();
+			out += "_" + coords;
+		}else{
+			out += "_" + this.location.getWifiID();
+		}
+		//out += "_22/7,22:40";
 		out += "_" + day + "/" + month + "," + hour + ":" + minute;
 		return out;
 	}
@@ -88,7 +93,9 @@ public class Message {
 		for(int i=0;i<userKeys.length;i++){
 			String key = userKeys[i];
 			if(keyPairs.containsKey(key)){
-				if(keyPairs.get(key).equals(user.getValue(key)))
+				String v1 = keyPairs.get(key);
+				String v2 = user.getValue(key);
+				if(v1.equals(v2))
 					out = true;
 			}
 		}

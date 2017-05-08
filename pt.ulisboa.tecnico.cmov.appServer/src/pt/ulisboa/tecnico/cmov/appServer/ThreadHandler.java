@@ -60,7 +60,7 @@ class ThreadHandler extends Thread {
 		String out;
 		int sessionID = Integer.parseInt(line.split("_")[1]);
 		User user = db.getUserFromSession(sessionID);
-		list = user.getAllKeys();
+		list = user.getAllKeyPairs();
 		if(list != null){
 			out = list[0];
 			for(int i=1;i<list.length;i++)
@@ -93,7 +93,7 @@ class ThreadHandler extends Thread {
 	public void deleteKeys(String line){
 		User user = db.getUserAccounts().getUser(line.split("_")[1]);
 		user.deleteAllKeys();
-		db.removeAllKeysFromUser(user.getAllKeys(), user);
+		db.removeAllKeysFromUser(user.getAllKeyPairs(), user);
 		System.out.println("All keys deleted");
 	}
 	

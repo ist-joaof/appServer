@@ -47,12 +47,26 @@ public class User {
 		return keyPairs.get(key);
 	}
 	
-	public String[] getAllKeys(){
+	public String[] getAllKeyPairs(){
 		if(!keyPairs.isEmpty()){
 			String[] out = new String[keyPairs.size()];
 			int ptr = 0;
 			for(Map.Entry<String, String> entry : keyPairs.entrySet()){
 				out[ptr] = entry.getKey() + "=" + entry.getValue();
+				ptr++;
+			}
+			return out;
+		}else{
+			return null;
+		}
+	}
+	
+	public String[] getAllKeys(){
+		if(!keyPairs.isEmpty()){
+			String[] out = new String[keyPairs.size()];
+			int ptr = 0;
+			for(Map.Entry<String, String> entry : keyPairs.entrySet()){
+				out[ptr] = entry.getKey();
 				ptr++;
 			}
 			return out;

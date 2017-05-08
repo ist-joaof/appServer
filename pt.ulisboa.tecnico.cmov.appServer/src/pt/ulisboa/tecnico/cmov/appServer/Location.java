@@ -92,7 +92,7 @@ public class Location {
 	}
 	
 	public Message[] checkKeys(User user){
-		Message[] out = new Message[0];
+		Message[] out = new Message[1];
 		int ptr = -1;
 		for(Map.Entry<String, Message> entry : messages.entrySet()){
 			Message message = entry.getValue();

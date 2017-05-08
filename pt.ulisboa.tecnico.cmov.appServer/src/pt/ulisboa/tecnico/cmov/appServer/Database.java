@@ -20,6 +20,9 @@ public class Database {
 	
 	public void createAdmin(){
 		User admin = userAccounts.newUser("admin", "admin");
+		Location location = new Location("Casa_Casa");
+		this.addLocation("casa", location);
+		//Message msg = new Message("novaMensagem_ola eu sou o joao_whiteList_campus=Taguspark_centralized_Casa", location,admin);
 		admin.addKeyPair("curso", "METI");
 		newKey("curso",admin);
 		admin.addKeyPair("campus", "Taguspark");
