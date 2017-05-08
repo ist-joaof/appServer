@@ -129,9 +129,9 @@ class ThreadHandler extends Thread {
 		Message message;
 		if (operation.equals("M+")){
 			String[] aux = line.split("_");
-			Location location = db.getLocation(aux[5]);
-			User user = db.getUserFromSession(Integer.parseInt(aux[6]));
-			line = aux[0] + "_" + aux[1] + "_" + aux[2] + "_" + aux[3] + "_" + aux[4];
+			Location location = db.getLocation(aux[6]);
+			User user = db.getUserFromSession(Integer.parseInt(aux[7]));
+			line = aux[0] + "_" + aux[1] + "_" + aux[2] + "_" + aux[3] + "_" + aux[4] + "_" + aux[5];
 			message = new Message(line, location, user);
 			location.addMessage(message);
 			user.addMessage(message);

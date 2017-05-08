@@ -17,12 +17,13 @@ public class Message {
 	public Message (String line, Location location, User user){
 		this.location = location;
 		this.owner = user;
-		//this.day = day;
-		//this.month = month;
-		//this.hour = hour;
-		//this.minute = minute;
  		String[] aux = line.split("_");
 		String[] keys;
+		String[] expiration = aux[5].split(",");
+		this.day = Integer.parseInt(expiration[0].split("/")[0]);
+		this.month = Integer.parseInt(expiration[0].split("/")[1]);
+		this.hour = Integer.parseInt(expiration[1].split(":")[0]);
+		this.minute = Integer.parseInt(expiration[1].split(":")[1]);
 		name = aux[0];
 		text = aux[1];
 		whiteList = true; 
@@ -76,14 +77,13 @@ public class Message {
 		String out;
 		out = this.name;
 		out += "_" + this.text;
+		out += "_" + day + "/" + month + "," + hour + ":" + minute;
 		if(location.isGPS()){
 			String coords = this.location.getLat().toMessage() + ":" + this.location.getLong().toMessage();
 			out += "_" + coords;
 		}else{
 			out += "_" + this.location.getWifiID();
 		}
-		//out += "_22/7,22:40";
-		out += "_" + day + "/" + month + "," + hour + ":" + minute;
 		return out;
 	}
 	//ver se iguala um ou todos
