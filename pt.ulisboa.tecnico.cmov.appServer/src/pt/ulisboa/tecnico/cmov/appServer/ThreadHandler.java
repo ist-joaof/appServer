@@ -100,7 +100,7 @@ class ThreadHandler extends Thread {
 	public void updateLocation(String line){
 		
 		String operation = line.split("_")[0];
-		line = line.substring(4, line.length());
+		line = line.substring(5, line.length());
 		Location location;
 		if (operation.equals("Loc+")){
 			location = new Location (line);

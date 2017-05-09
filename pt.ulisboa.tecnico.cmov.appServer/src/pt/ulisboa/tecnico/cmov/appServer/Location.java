@@ -22,9 +22,9 @@ public class Location {
 		if (aux.length > 2) {
 			gps = true;
 			name = aux[0];
-			lat = new Coordenates(true, Integer.parseInt(aux[1]),  aux[2]);
-			longe = new Coordenates(false, Integer.parseInt(aux[3]), aux[4]);
-			radius = Integer.parseInt(aux[9]);
+			lat = new Coordenates(true, Double.parseDouble(aux[1]),  aux[2]);
+			longe = new Coordenates(false, Double.parseDouble(aux[3]), aux[4]);
+			radius = Integer.parseInt(aux[5]);
 
 		} else {
 			gps = false;

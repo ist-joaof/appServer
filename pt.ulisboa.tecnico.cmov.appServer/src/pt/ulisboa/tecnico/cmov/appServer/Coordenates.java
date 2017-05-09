@@ -6,7 +6,7 @@ public class Coordenates {
 	private double degrees;
 	private String direction;
 	
-	public Coordenates(boolean latLong, float degrees, String direction){
+	public Coordenates(boolean latLong, double degrees, String direction){
 		
 		this.latitude = latLong;;
 		this.degrees = degrees;
