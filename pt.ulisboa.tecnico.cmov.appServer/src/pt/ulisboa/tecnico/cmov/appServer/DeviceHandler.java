@@ -19,9 +19,9 @@ public class DeviceHandler extends Thread{
 	    accounts = db.getUserAccounts();
 	}
 	
-	public String updateUserLocation(String line){
+	public Message[] updateUserLocation(String line){
 		String[] aux = line.split("_");
-		String[] msg1, msg2;
+		Message[] msg1, msg2;
 		User user = db.getUserFromSession(Integer.parseInt(aux[1]));
 		String[] coords = new String[]{aux[2],aux[3]};
 		String[] wifis = new String[aux.length-4];
@@ -33,44 +33,57 @@ public class DeviceHandler extends Thread{
 		if(msg1 == null){
 			msg1 = msg2;
 			if(msg2 == null)
-				return "empty";
+				return null;
 		}
-		String out = msg1[0];
-		for(int i=1;i<msg1.length;i++){
-			out += "_" + aux[i];
-		}
-		
-		return out;
+		return msg1;
 	}
 	
-	public String[] getMessagesGPS(String[] coords, User user){
+	public Message[] getMessagesGPS(String[] coords, User user){
 		Location loc = db.checkLocation(Double.parseDouble(coords[0]),Double.parseDouble(coords[1]));
 		if(loc != null){
 			Message[] messages = loc.checkKeys(user);
 			if(messages != null){
-				String[] out = new String[messages.length];
-				for(int i=0;i<messages.length;i++){
-					out[i] = messages[i].toMessage();
-				}
-				return out;
+				return messages;
 			}
 		}
 		return null;
 	}
 	
-	public String[] getMessagesWifi(String[] wifis, User user){
+	public Message[] getMessagesWifi(String[] wifis, User user){
 		Location loc = db.checkLocation(wifis);
 		if(loc != null){
 			Message[] messages = loc.checkKeys(user);
 			if(messages != null){
-				String[] out = new String[messages.length];
-				for(int i=0;i<messages.length;i++){
-					out[i] = messages[i].toMessage();
-				}
-				return out;
+				return messages;
 			}
 		}
 		return null;
+	}
+	
+	public String getMsgNames(Message[] msgs){
+		String out = msgs[0].getName();
+		for(int i=1;i<msgs.length;i++){
+			out += "_" + msgs[i];
+		}
+		return out;
+	}
+	
+	public String getMessages(String line, Message[] msgs){
+		String[] names = line.split("_");
+		String out = new String();
+		boolean first = true;
+		for(String name : names){
+			for(Message msg : msgs){
+				if(msg.getName().equals(name)){
+					if(!first){
+						out += "_";
+					}
+					out += msg.toMessage();
+					first = false;
+				}
+			}
+		}
+		return out;
 	}
 	
 	public void run(){
@@ -93,9 +106,23 @@ public class DeviceHandler extends Thread{
 	            } else {
 	                operation = line.trim().split("_")[0];
 	                if(operation.equals("U")){
-	                	String answer = updateUserLocation(line);
-	                	outp.println(answer);
-	                	System.out.println(answer);
+	                	Message[] messages = updateUserLocation(line);
+	                	String answer;
+	                	if(messages != null){
+	                		answer = getMsgNames(messages);
+	                		outp.println(answer);
+		                	System.out.println(answer);
+		                	line = inp.readLine();
+		                	System.out.println("Message '" + line);
+		                	if(!line.equals("none")){
+		                		answer = getMessages(line, messages);
+		                		outp.println(answer);
+		                		System.out.println(answer);
+		                	}		    
+	                	}else{
+	                		outp.println("empty");
+	                		System.out.println("empty");
+	                	}
 	                }
 	            }
 	        }

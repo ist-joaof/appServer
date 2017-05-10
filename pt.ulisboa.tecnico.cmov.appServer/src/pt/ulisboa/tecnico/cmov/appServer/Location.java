@@ -97,8 +97,10 @@ public class Location {
 		for(Map.Entry<String, Message> entry : messages.entrySet()){
 			Message message = entry.getValue();
 			if(message.checkKeys(user) && message.getDeliveryType()){
-				ptr ++;
-				out[ptr] = message;
+				if(!message.getOwner().getUsername().equals(user.getUsername())){
+					ptr ++;
+					out[ptr] = message;
+				}
 			}
 		}
 		if(ptr >= 0){

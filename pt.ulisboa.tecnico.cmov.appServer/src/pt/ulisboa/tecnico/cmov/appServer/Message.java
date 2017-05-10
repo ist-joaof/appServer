@@ -90,19 +90,22 @@ public class Message {
 	public boolean checkKeys(User user){
 		String[] userKeys = user.getAllKeys();
 		boolean out = false;
-		for(int i=0;i<userKeys.length;i++){
-			String key = userKeys[i];
-			if(keyPairs.containsKey(key)){
-				String v1 = keyPairs.get(key);
-				String v2 = user.getValue(key);
-				if(v1.equals(v2))
-					out = true;
+		if(userKeys != null){
+			for(int i=0;i<userKeys.length;i++){
+				String key = userKeys[i];
+				if(keyPairs.containsKey(key)){
+					String v1 = keyPairs.get(key);
+					String v2 = user.getValue(key);
+					if(v1.equals(v2))
+						out = true;
+				}
+			}
+			if(whiteList){
+				return out;
+			}else{
+				return !out;
 			}
 		}
-		if(whiteList){
-			return out;
-		}else{
-			return !out;
-		}
+		return out;
 	}
 }
