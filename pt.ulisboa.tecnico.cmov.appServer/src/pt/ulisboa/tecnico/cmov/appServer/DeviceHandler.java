@@ -63,7 +63,7 @@ public class DeviceHandler extends Thread{
 	public String getMsgNames(Message[] msgs){
 		String out = msgs[0].getName();
 		for(int i=1;i<msgs.length;i++){
-			out += "_" + msgs[i];
+			out += "_" + msgs[i].getName();
 		}
 		return out;
 	}

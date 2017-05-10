@@ -20,9 +20,11 @@ public class Database {
 	
 	public void createAdmin(){
 		User admin = userAccounts.newUser("admin", "admin");
-		Location location = new Location("Casa_Casa");
-		this.addLocation("Casa", location);
+		Location location = new Location("VIMMIAP_VIMMIAP");
+		this.addLocation("VIMMAP", location);
 		Message msg = new Message("novaMensagem_ola eu sou o joao_whiteList_campus=Taguspark_centralized_22/5,22:30", location,admin);
+		msg = new Message("newMessage_Como esta tudo?#Andas a comer tua dama que nem um dread?_whiteList_campus=Taguspark_centralized_22/5,22:30",location,admin);
+		msg = new Message("faildeMessage_Isto vai falhar_whiteList_campus=Taguspark_centralized_10/5,11:00",location,admin);
 		admin.addKeyPair("curso", "METI");
 		newKey("curso",admin);
 		admin.addKeyPair("campus", "Taguspark");

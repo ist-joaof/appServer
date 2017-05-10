@@ -1,5 +1,8 @@
 package pt.ulisboa.tecnico.cmov.appServer;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,5 +110,42 @@ public class Message {
 			}
 		}
 		return out;
+	}
+	
+	public void removeMessage(){
+		owner.removeMessage(name);
+		location.removeMessage(name);
+	}
+	
+	public boolean isValid(){
+		DateFormat timeFormat = new SimpleDateFormat("dd_MM_HH_mm");
+		Date time = new Date();
+		String[] aux = timeFormat.format(time).split("_");
+		 int day = Integer.parseInt(aux[0]);
+		 int month = Integer.parseInt(aux[1]);
+		 int hour = Integer.parseInt(aux[2]);
+		 int minute = Integer.parseInt(aux[3]);
+		 boolean valid = true;
+		 if(this.month<=month){
+			 if(this.month < month){
+				 valid = false;
+			 }else{
+				 if(this.day<=day){
+					 if(this.day<day){
+						 valid = false;
+					 }else{
+						 if(this.hour <= hour){
+							 if(this.hour < hour){
+								 valid = false;
+							 }else{
+								 if(this.minute <= minute)
+									 valid = false;
+							 }
+						 }
+					 }
+				 }
+			 }
+		 }
+		 return valid;
 	}
 }

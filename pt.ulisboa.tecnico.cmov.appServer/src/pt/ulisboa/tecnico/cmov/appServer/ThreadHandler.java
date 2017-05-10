@@ -133,14 +133,11 @@ class ThreadHandler extends Thread {
 			User user = db.getUserFromSession(Integer.parseInt(aux[7]));
 			line = aux[0] + "_" + aux[1] + "_" + aux[2] + "_" + aux[3] + "_" + aux[4] + "_" + aux[5];
 			message = new Message(line, location, user);
-			location.addMessage(message);
-			user.addMessage(message);
 		} else{
 			String[] aux = line.split("_");
 			User user = db.getUserFromSession(Integer.parseInt(aux[1]));
 			message = user.getMessage(aux[0]);
-			message.getLocation().removeMessage(aux[0]);
-			user.removeMessage(aux[0]);
+			message.removeMessage();
 			
 		}
 	}
@@ -149,11 +146,14 @@ class ThreadHandler extends Thread {
 		int session = Integer.parseInt(line.split("_")[1]);
 		User user = db.getUserFromSession(session);
 		String[] aux = user.listMessages();
-		String out = aux[0];
-		for(int i = 1; i < aux.length; i++){
-			out += "_" + aux[i];
+		if(aux[0] != null){
+			String out = aux[0];
+			for(int i = 1; i < aux.length; i++){
+				out += "_" + aux[i];
+			}
+			return out;
 		}
-		return out;
+		return "empty";
 	}
 	
 	

@@ -1,8 +1,10 @@
 package pt.ulisboa.tecnico.cmov.appServer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.lang.Math.*;
+import java.lang.reflect.Array;
 
 
 
@@ -92,19 +94,35 @@ public class Location {
 	}
 	
 	public Message[] checkKeys(User user){
-		Message[] out = new Message[1];
+		ArrayList<Message> out = new ArrayList<Message>();
 		int ptr = -1;
+		Message[] erase = new Message[messages.size()];
 		for(Map.Entry<String, Message> entry : messages.entrySet()){
 			Message message = entry.getValue();
 			if(message.checkKeys(user) && message.getDeliveryType()){
 				if(!message.getOwner().getUsername().equals(user.getUsername())){
-					ptr ++;
-					out[ptr] = message;
+					if(message.isValid()){
+						ptr ++;
+						out.add(message);
+					}else{
+						erase[ptr+1] = message;
+					}
 				}
 			}
 		}
+		for(Message msg : erase){
+			if(msg != null){
+				msg.removeMessage();
+			}
+		}
 		if(ptr >= 0){
-			return out;
+			Message[] msgs = new Message[out.size()];
+			int i = 0;
+			for(Message msg : out){
+				msgs[i] = msg;
+				i++;
+			}
+			return msgs;
 		}else{
 		return null;
 		}

@@ -93,10 +93,39 @@ public class User {
 	
 	public String[] listMessages(){
 		String[] out = new String[messages.size()];
+		Message[] erase = new Message[messages.size()];
 		int i=0;
 		for (Map.Entry<String, Message> entry: messages.entrySet()){
-			out[i] = entry.getKey();
-			i++;
+			Message message = entry.getValue();
+			if(message.isValid()){
+				out[i] = entry.getKey();
+				i++;
+			}else{
+				erase[i] = message;
+			}
+		}
+		for(Message msg : erase){
+			if(msg != null){
+				msg.removeMessage();
+			}
+		}
+		return reSize(out);
+	}
+	
+	private String[] reSize(String[] in){
+		int count = 0;
+		for(String line : in){
+			if(line != null){
+				count ++;
+			}
+		}
+		String[] out = new String[count];
+		int ptr = 0;
+		for(String line : in){
+			if(line != null){
+				out[ptr] = line;
+				ptr ++;
+			}
 		}
 		return out;
 	}
