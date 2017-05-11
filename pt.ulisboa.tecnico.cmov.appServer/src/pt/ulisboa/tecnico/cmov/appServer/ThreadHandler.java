@@ -146,7 +146,7 @@ class ThreadHandler extends Thread {
 		int session = Integer.parseInt(line.split("_")[1]);
 		User user = db.getUserFromSession(session);
 		String[] aux = user.listMessages();
-		if(aux[0] != null){
+		if(aux.length > 0 && aux[0] != null){
 			String out = aux[0];
 			for(int i = 1; i < aux.length; i++){
 				out += "_" + aux[i];
