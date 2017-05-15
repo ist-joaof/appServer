@@ -8,9 +8,13 @@ public class Coordenates {
 	
 	public Coordenates(boolean latLong, double degrees, String direction){
 		
+		if(direction.equals("S") || direction.equals("W"))
+			degrees = -degrees;
+		
 		this.latitude = latLong;;
 		this.degrees = degrees;
 		this.direction = direction;
+		
 	}
 
 	public boolean getLatitude() {
@@ -26,6 +30,10 @@ public class Coordenates {
 	}
 	
 	public String toMessage(){
+		double degrees = this.degrees;
+		if(direction.equals("S") || direction.equals("W"))
+			degrees = -degrees;
+		
 		return String.valueOf(degrees) +"$"+ direction;
 	}
 	
