@@ -82,7 +82,7 @@ public class Message {
 		out += "_" + this.text;
 		out += "_" + day + "/" + month + "," + hour + ":" + minute;
 		if(location.isGPS()){
-			String coords = this.location.getLat().toMessage() + ":" + this.location.getLong().toMessage();
+			String coords = location.getName();
 			out += "_" + coords;
 		}else{
 			out += "_" + this.location.getWifiID();

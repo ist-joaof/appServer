@@ -21,7 +21,7 @@ public class Database {
 	public void createAdmin(){
 		User admin = userAccounts.newUser("admin", "admin");
 		Location location = new Location("VIMMIAP_VIMMIAP");
-		this.addLocation("VIMMAP", location);
+		this.addLocation("VIMMIAP", location);
 		Location location2 = new Location("WiredSSID_WiredSSID");
 		this.addLocation("WiredSSID", location2);
 		Message msg = new Message("novaMensagem_ola eu sou o joao_whiteList_campus=Taguspark_centralized_22/5,22:30", location,admin);

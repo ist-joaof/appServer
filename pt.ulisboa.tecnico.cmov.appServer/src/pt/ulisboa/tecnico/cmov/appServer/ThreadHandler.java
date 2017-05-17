@@ -156,6 +156,14 @@ class ThreadHandler extends Thread {
 		return "empty";
 	}
 	
+	public String getMessage(String line){
+		int session = Integer.parseInt(line.split("_")[1]);
+		String message = line.split("_")[2];
+		User user = db.getUserFromSession(session);
+		Message msg = user.getMessage(message);
+		return msg.toMessage();
+	}
+	
 	
 	public void run() {
 	    try {
@@ -236,6 +244,12 @@ class ThreadHandler extends Thread {
 	                }
 	                if(operation.equals("M")){
 	                	out = listMessages(line);
+	                	outp.println(out);
+	                	System.out.println(out);
+	                	more_data=false;
+	                }
+	                if(operation.equals("MG")){
+	                	out = getMessage(line);
 	                	outp.println(out);
 	                	System.out.println(out);
 	                	more_data=false;
